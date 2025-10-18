@@ -20,6 +20,35 @@ server.get('/horaAtual', (requisocao, resposta) => {
         </body>`)
 });
 
+//metodo q aceita parametro
+server.get('/tabuada', (requisocao,resposta) => {
+    const numero = parseInt(requisocao.query.numero);
+    const sequencia = parseInt(requisocao.query.numero);
+    if(!numero || !sequencia){
+        resposta.send(`<body>
+        <h1>Tabuada</h1>
+        <h1>Insira o numero e a sequencia na url</h1>
+        `);
+    }else{
+        resposta.write(`
+        <body>
+            <h1>Tabuada do ${numero} ate a sequencia ${sequencia}</h1>
+            <ul>
+        `);
+        for (let i = 0;i<=sequencia+1;i++){
+            resposta.write(`<li>${i} x ${numero} = ${i * numero}</li>`);
+        }
+
+        resposta.write(`
+            </ul>
+            </body>`)
+
+        resposta.end();
+    }
+
+});
+
+
 server.listen(porta, host, () => {
     console.log(`Servidor escutando em http://${host}:${porta}`);
 });
